@@ -35,7 +35,7 @@ function Appointments() {
                             <option value="">Todos os médicos</option>
                             {
                                 doctors.map((doc) => {
-                                    return <option value={doc.id_doctor}>{doc.name}</option>
+                                    return <option key={doc.id_doctor} value={doc.id_doctor}>{doc.name}</option>
                                 })
                             }
                         </select>
