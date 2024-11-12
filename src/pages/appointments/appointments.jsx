@@ -1,8 +1,19 @@
 import Navbar from "../../components/navbar/navbar";
 import { Link } from "react-router-dom";
-import { doctors } from "../../constants/data";
+import { doctors, appointments } from "../../constants/data";
+import Appointment from "../../components/appointment/appointment";
+import "./appointments.css";
 
 function Appointments() {
+
+    function ClickEdit(id_appointment) {
+        console.log(`Editar: ${id_appointment}`);
+    }
+
+    function ClickDelete(id_appointment) {
+        console.log(`Deletar: ${id_appointment}`);
+    }
+
     return (
         <div className="container-fluid mt-page">
             <Navbar />
@@ -46,7 +57,20 @@ function Appointments() {
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        {appointments.map((ap) => {
+                            return <Appointment
+                                key={ap.id_appointment}
+                                id_appointment={ap.id_appointment}
+                                user={ap.user}
+                                doctor={ap.doctor}
+                                service={ap.service}
+                                booking_date={ap.booking_date}
+                                booking_hour={ap.booking_hour}
+                                price={ap.price}
+                                clickEdit={ClickEdit}
+                                clickDelete={ClickDelete}
+                            />
+                        })}
                     </tbody>
                 </table>
             </div>
