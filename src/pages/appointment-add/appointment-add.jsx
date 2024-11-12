@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar"
 import { doctors, doctors_services } from "../../constants/data";
 
 function AppointmentAdd() {
+
+    const { id_appointment } = useParams();
+
     return (
         <>
             <Navbar />
@@ -10,7 +13,11 @@ function AppointmentAdd() {
             <div className="container-fluid mt-page">
                 <div className="row col-lg-4 offset-lg-4">
                     <div className="col-12 mt-2">
-                        <h2>Novo Agendamento</h2>
+                        <h2>
+                            {
+                                id_appointment > 0 ? "Editar Agendamento" : "Novo Agendamento"
+                            }
+                        </h2>
                     </div>
 
                     <div className="col-12 mt-4">
@@ -62,8 +69,8 @@ function AppointmentAdd() {
 
                     <div className="col-12 mt-4">
                         <div className="d-flex justify-content-end">
-                                <Link to="/appointments" className="btn btn-outline-primary me-3">Cancelar</Link>
-                                <button className="btn btn-primary">Salvar Dados</button>
+                            <Link to="/appointments" className="btn btn-outline-primary me-3">Cancelar</Link>
+                            <button className="btn btn-primary">Salvar Dados</button>
                         </div>
                     </div>
 
