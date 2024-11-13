@@ -1,6 +1,5 @@
 import Navbar from "../../components/navbar/navbar";
 import { Link, useNavigate } from "react-router-dom";
-import { doctors } from "../../constants/data";
 import Appointment from "../../components/appointment/appointment";
 import "./appointments.css";
 import { useEffect, useState } from "react";
@@ -10,6 +9,8 @@ function Appointments() {
 
     const navigate = useNavigate();
     const [appointments, setAppointments] = useState([]);
+    const [doctors, setDoctors] = useState([]);
+    const [idDoctor, setIdDoctor] = useState("");
 
     function ClickEdit(id_appointment) {
         navigate("/appointments/edit/" + id_appointment);
@@ -19,11 +20,27 @@ function Appointments() {
         console.log(`Deletar: ${id_appointment}`);
     }
 
+    async function LoadDoctors() {
+        try {
+            const response = await api.get("/doctors");
+
+            if (response.data) {
+                setDoctors(response.data);
+            }
+        } catch (error) {
+            if (error.response?.data.error) {
+                alert(error.response?.data.error);
+            } else {
+                alert("Erro ao listar médicos.");
+            }
+        }
+    }
+
     async function LoadAppointments() {
         try {
-            const response = await api.get("/appointments", {
+            const response = await api.get("/admin/appointments", {
                 params: {
-                    
+                    id_doctor: idDoctor
                 }
             });
 
@@ -39,8 +56,13 @@ function Appointments() {
         }
     }
 
+    function ChangeDoctor(e) {
+        setIdDoctor(e.target.value);
+    }
+
     useEffect(() => {
         LoadAppointments();
+        LoadDoctors();
     }, []);
 
     return (
@@ -60,7 +82,7 @@ function Appointments() {
                     <input type="date" id="endDate" className="form-control" />
 
                     <div className="form-control ms-3 me-3">
-                        <select name="doctor" id="doctor">
+                        <select name="doctor" id="doctor" value={idDoctor} onChange={ChangeDoctor}>
                             <option value="">Todos os médicos</option>
                             {
                                 doctors.map((doc) => {
