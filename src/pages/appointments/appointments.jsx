@@ -1,12 +1,15 @@
 import Navbar from "../../components/navbar/navbar";
 import { Link, useNavigate } from "react-router-dom";
-import { doctors, appointments } from "../../constants/data";
+import { doctors } from "../../constants/data";
 import Appointment from "../../components/appointment/appointment";
 import "./appointments.css";
+import { useEffect, useState } from "react";
+import api from "../../constants/api.js";
 
 function Appointments() {
 
     const navigate = useNavigate();
+    const [appointments, setAppointments] = useState([]);
 
     function ClickEdit(id_appointment) {
         navigate("/appointments/edit/" + id_appointment);
@@ -15,6 +18,30 @@ function Appointments() {
     function ClickDelete(id_appointment) {
         console.log(`Deletar: ${id_appointment}`);
     }
+
+    async function LoadAppointments() {
+        try {
+            const response = await api.get("/appointments", {
+                params: {
+                    
+                }
+            });
+
+            if (response.data) {
+                setAppointments(response.data);
+            }
+        } catch (error) {
+            if (error.response?.data.error) {
+                alert(error.response?.data.error);
+            } else {
+                alert("Erro ao fazer login, tente novamente mais tarde!");
+            }
+        }
+    }
+
+    useEffect(() => {
+        LoadAppointments();
+    }, []);
 
     return (
         <div className="container-fluid mt-page">
@@ -42,7 +69,7 @@ function Appointments() {
                             }
                         </select>
                     </div>
-                    <button className="btn btn-primary">Filtrar</button>
+                    <button onClick={LoadAppointments} className="btn btn-primary" type="button">Filtrar</button>
                 </div>
             </div>
 
