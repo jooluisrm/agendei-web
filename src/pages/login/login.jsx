@@ -9,8 +9,8 @@ function Login() {
 
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("joao@admin.com");
+    const [password, setPassword] = useState("12345");
     const [msg, setMsg] = useState("");
 
     async function ExecuteLogin() {
@@ -63,6 +63,7 @@ function Login() {
                             placeholder="E-mail"
                             className="form-control"
                             onChange={(e) => setEmail(e.target.value)}
+                            value={email}
                         />
                     </div>
                     <div className="mt-2">
@@ -71,6 +72,7 @@ function Login() {
                             placeholder="Senha"
                             className="form-control"
                             onChange={(e) => setPassword(e.target.value)}
+                            value={password}
                         />
                     </div>
                     <div className="mt-3 mb-5">

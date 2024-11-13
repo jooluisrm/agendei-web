@@ -14,7 +14,7 @@ function Appointments() {
     const [idDoctor, setIdDoctor] = useState("");
     const [dtStart, setDtStart] = useState("");
     const [dtEnd, setDtEnd] = useState("");
-    
+
 
     function ClickEdit(id_appointment) {
         navigate("/appointments/edit/" + id_appointment);
@@ -33,7 +33,9 @@ function Appointments() {
             }
         } catch (error) {
             if (error.response?.data.error) {
-                alert(error.response?.data.error);
+                if (error.response.status === 401) {
+                    return navigate("/");
+                }
             } else {
                 alert("Erro ao listar médicos.");
             }
@@ -55,7 +57,11 @@ function Appointments() {
             }
         } catch (error) {
             if (error.response?.data.error) {
-                alert(error.response?.data.error);
+
+                if (error.response.status === 401) {
+                    return navigate("/");
+                }
+
             } else {
                 alert("Erro ao fazer login, tente novamente mais tarde!");
             }
@@ -83,9 +89,9 @@ function Appointments() {
                     </Link>
                 </div>
                 <div className="d-flex justify-content-end align-items-center">
-                    <input type="date" id="startDate" className="form-control" onChange={(e) => setDtStart(e.target.value)}/>
+                    <input type="date" id="startDate" className="form-control" onChange={(e) => setDtStart(e.target.value)} />
                     <span className="m-2">Até</span>
-                    <input type="date" id="endDate" className="form-control" onChange={(e) => setDtEnd(e.target.value)}/>
+                    <input type="date" id="endDate" className="form-control" onChange={(e) => setDtEnd(e.target.value)} />
 
                     <div className="form-control ms-3 me-3">
                         <select name="doctor" id="doctor" value={idDoctor} onChange={ChangeDoctor}>
