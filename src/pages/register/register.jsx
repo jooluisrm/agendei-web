@@ -18,7 +18,7 @@ function Register() {
 
         setMsg("");
 
-        if(password != password2) {
+        if (password != password2) {
             return setMsg("As senhas não conferem. Digite novamete.")
         }
 
